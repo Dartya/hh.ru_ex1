@@ -1,25 +1,51 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.StringTokenizer;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);        //создаем объект класса сканнер
-        String inputstring = sc.nextLine();         //строка с входными данными
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String inputstring = null;
+        try {
+            inputstring = br.readLine();
+            if (inputstring == null)
+                System.out.println("");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         StringTokenizer st = new StringTokenizer(inputstring, " "); //класс, читающий данные через разделитель
+        ArrayList<Integer> list = new ArrayList<>();
+        int first_elem, second_elem, currentval;
 
-        int currentval; //текущая лексема в строке
-        boolean[] boolArr = new boolean[1000000000];    //массив boolean значений для поиска минимального отсутствующего эл-та
-
-        while(st.hasMoreTokens()) {     //пока в введенной строке еще есть лексема
-            currentval = Integer.parseInt(st.nextToken());  //считать следующий символ из введенной строки
-            if (currentval > 0)         //если он принадлежит множеству N (сразу договоримся, что 0 не входит в N, иначе условие(currentval >= 0))
-                    boolArr[currentval-1] = true; //то эле-ту масива boolArr с индексом = (считанное значение - 1) присвоить true
+        while(st.hasMoreTokens()) {
+            currentval = Integer.parseInt(st.nextToken());
+            if ((currentval > 0) && (currentval <= 1000000000 ))
+                    list.add(currentval);
+            else continue;
         }
 
-        for (int i = 0; i < boolArr.length; i++){   //поиск минимального отсутствующего элемента введенной строки
-            if (boolArr[i] == false) {      //минимальный отсутствующий элемент - это тот элемент массива, который не помечен как true
-                System.out.println((i+1));  //значит, начнем поиск минимального элемента с начала массива и до того момента, пока не встретится false эл-т
-                break;                      //(индекс данного элеента+1) - это и есть отсутствующий минимальный элемент в введенной строке, завершить цикл
+        Collections.sort(list);
+
+        if (list.get(0) > 1)
+            System.out.println("1");
+        else {
+            for (int i = 0; i < list.size(); i++){   //поиск минимального отсутствующего элемента введенной строки
+                first_elem = list.get(i);
+                if (i+1 < list.size())
+                    second_elem = list.get(i+1);
+                else {
+                    System.out.println("");
+                    break;
+                }
+
+                if ((second_elem - first_elem) > 1) {
+                    System.out.println("" + (first_elem+1));
+                    break;
+                }
             }
         }
     }
@@ -39,4 +65,7 @@ public class Main {
 
 //строка для теста:
 //-9 -8 -7 7 8 -10 -7 9 4 3 -500 6 7 8 15 5 23 2
+//должно выйти 1 - верно
+
+//-9 -8 -7 7 8 -10 -7 9 4 3 -500 6 7 8 15 5 23 2 1000000000
 //должно выйти 1 - верно
