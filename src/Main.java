@@ -1,15 +1,17 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String inputstring = null;
+        ArrayList<Integer> list = new ArrayList<>();
+        Set<Integer> hashset = new HashSet<>();
+        int first_elem, second_elem, currentval;
+
         try {
             inputstring = br.readLine();
             if (inputstring == null)
@@ -17,33 +19,39 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        StringTokenizer st = new StringTokenizer(inputstring, " "); //класс, читающий данные через разделитель
-        ArrayList<Integer> list = new ArrayList<>();
-        int first_elem, second_elem, currentval;
 
-        while(st.hasMoreTokens()) {
+
+        StringTokenizer st = new StringTokenizer(inputstring, " ");
+        while (st.hasMoreTokens()) {
             currentval = Integer.parseInt(st.nextToken());
-            if ((currentval > 0) && (currentval <= 1000000000 ))
-                    list.add(currentval);
+            if ((currentval > 0) && (currentval <= 1000000000))
+                hashset.add(currentval);
             else continue;
+        }
+        for (Integer integer: hashset) {
+            list.add(integer);
         }
 
         Collections.sort(list);
 
-        if (list.get(0) > 1)
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+
+        if ((list.get(0) > 1) || (list.get(0) < 0))
             System.out.println("1");
         else {
-            for (int i = 0; i < list.size(); i++){   //поиск минимального отсутствующего элемента введенной строки
+            for (int i = 0; i < list.size(); i++) {
                 first_elem = list.get(i);
-                if (i+1 < list.size())
-                    second_elem = list.get(i+1);
+                if (i + 1 < list.size())
+                    second_elem = list.get(i + 1);
                 else {
                     System.out.println("");
                     break;
                 }
 
                 if ((second_elem - first_elem) > 1) {
-                    System.out.println("" + (first_elem+1));
+                    System.out.println("" + (first_elem + 1));
                     break;
                 }
             }
@@ -67,5 +75,6 @@ public class Main {
 //-9 -8 -7 7 8 -10 -7 9 4 3 -500 6 7 8 15 5 23 2
 //должно выйти 1 - верно
 
-//-9 -8 -7 7 8 -10 -7 9 4 3 -500 6 7 8 15 5 23 2 1000000000
+//строка для теста:
+//-9 -8 -7 7 8 -10 -7 9 4 3 -500 6 1000000000 7 8 15 5 23 2
 //должно выйти 1 - верно
