@@ -1,10 +1,9 @@
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);        //класс сканнер
+        Scanner sc = new Scanner(System.in);        //создаем объект класса сканнер
         String inputstring = sc.nextLine();         //строка с входными данными
         StringTokenizer st = new StringTokenizer(inputstring, " "); //класс, читающий данные через разделитель
 
