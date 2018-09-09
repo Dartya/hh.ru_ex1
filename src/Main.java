@@ -5,23 +5,22 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);        //класс сканнер
-        System.out.println("Введите строку:\n");    //сообщение
         String inputstring = sc.nextLine();         //строка с входными данными
         StringTokenizer st = new StringTokenizer(inputstring, " "); //класс, читающий данные через разделитель
 
         int currentval; //текущая лексема в строке
-        boolean[] boolArr = new boolean[1000000000];
+        boolean[] boolArr = new boolean[1000000000];    //массив boolean значений для поиска минимального отсутствующего эл-та
 
         while(st.hasMoreTokens()) {     //пока в введенной строке еще есть лексема
-            currentval = Integer.parseInt(st.nextToken());
-            if (currentval > 0)
-                    boolArr[currentval-1] = true;
+            currentval = Integer.parseInt(st.nextToken());  //считать следующий символ из введенной строки
+            if (currentval > 0)         //если он принадлежит множеству N (сразу договоримся, что 0 не входит в N, иначе условие(currentval >= 0))
+                    boolArr[currentval-1] = true; //то эле-ту масива boolArr с индексом = (считанное значение - 1) присвоить true
         }
 
-        for (int i = 0; i < boolArr.length; i++){
-            if (boolArr[i] == false) {
-                System.out.println((i+1));
-                break;
+        for (int i = 0; i < boolArr.length; i++){   //поиск минимального отсутствующего элемента введенной строки
+            if (boolArr[i] == false) {      //минимальный отсутствующий элемент - это тот элемент массива, который не помечен как true
+                System.out.println((i+1));  //значит, начнем поиск минимального элемента с начала массива и до того момента, пока не встретится false эл-т
+                break;                      //(индекс данного элеента+1) - это и есть отсутствующий минимальный элемент в введенной строке, завершить цикл
             }
         }
     }
@@ -32,9 +31,13 @@ public class Main {
 //должно выйти 5 - верно
 
 //строка для теста:
-//-9 -8 -7 7 8 -10 -7 9 4 3 -500 6 7 8 15 5 23 1 2
+//-9 -8 -7 7 8 -10 -7 9 4 3 -500 7 8 15 5 23 1 2
 //должно выйти 6 - верно
 
 //строка для теста:
 //-9 -8 -7 7 8 -10 -7 9 4 3 -500 6 7 8 15 5 23 1 2
-//должно выйти 10
+//должно выйти 10 - верно
+
+//строка для теста:
+//-9 -8 -7 7 8 -10 -7 9 4 3 -500 6 7 8 15 5 23 2
+//должно выйти 1 - верно
